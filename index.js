@@ -77,3 +77,25 @@ function throttle(func, interval) {
         func.apply(this, args);
     }
 }
+
+/**
+ * 金额格式化
+ * @param {Number} num 数字
+ * @return {String} 格式化后的字符串
+ */
+function toThousands(num) {
+    var potStr = '.00'
+    num = (num||0).toString()
+    if(num.indexOf('.') !== -1){
+       potStr = num.substr(num.indexOf('.'),3)
+    }
+    
+    var result = [ ], counter = 0;
+    num = num.substring(0,num.indexOf('.')).split('');
+    for (var i = num.length - 1; i >= 0; i--) {
+        counter++;
+        result.unshift(num[i]);
+        if (!(counter % 3) && i != 0) { result.unshift(','); }
+    }
+    return result.join('')+potStr;
+}
